@@ -50,7 +50,7 @@ The [model.py](https://github.com/zhoujh30/CarND-Behavioral-Cloning-P3/blob/mast
 
 I used [Nvidia CNN architecture](https://devblogs.nvidia.com/parallelforall/deep-learning-self-driving-cars/) used to train self-driving cars ([model.py line 103-119](https://github.com/zhoujh30/CarND-Behavioral-Cloning-P3/blob/master/model.py#L103-L119)). 
 
-Here is a graph of the architecture:
+Here is a summary of the architecture:
 
 ```
 Layer (type)                     Output Shape          Param #     Connected to                     
@@ -83,7 +83,8 @@ ________________________________________________________________________________
 dense_4 (Dense)                  (None, 10)            510         dense_3[0][0]                    
 ____________________________________________________________________________________________________
 dense_5 (Dense)                  (None, 1)             11          dense_4[0][0]                    
-======================================================
+====================================================================================================
+
 Total params: 2,712,951
 Trainable params: 2,712,951
 Non-trainable params: 0
@@ -129,5 +130,9 @@ Here is a visualization of the training and validation loss for each epoch in th
 ![alt text][image4]
 
 After several rounds of trainings and parameter tuning, the vehicle is able to drive autonomously around the track without leaving the road.
+
+<p align="center">
+  <img src="https://github.com/zhoujh30/CarND-Behavioral-Cloning-P3/blob/master/images/video.gif?raw=true">
+</p>
 
 ![video](https://github.com/zhoujh30/CarND-Behavioral-Cloning-P3/blob/master/images/video.gif?raw=true)
