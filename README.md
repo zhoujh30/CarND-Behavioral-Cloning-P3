@@ -104,19 +104,27 @@ The model used an adam optimizer, so the learning rate was not tuned manually ([
 
 Training data was chosen to keep the vehicle driving on the road. To capture good driving behavior, I recorded ten laps on track one using center lane driving. Here is an example image of center lane driving:
 
-![alt text][image5]
+<p align="center">
+  <img src="./images/center_img.png">
+</p>
 
 To augment the data set, I used the images from left and right cameras by adding 0.2 correction on the steering angles:
 
-![alt text][image1]
+<p align="center">
+  <img src="./images/img.png">
+</p>
 
 I also flipped images and angles:
 
-![alt text][image2]
+<p align="center">
+  <img src="./images/img_flip.png">
+</p>
 
 After the collection process, I had 7,980 data points. I then preprocessed this data by cropping the images to only keep the portions that contain useful information.
 
-![alt text][image3]
+<p align="center">
+  <img src="./images/img_crop.png">
+</p>
 
 
 I finally randomly shuffled the data set and put 20% of the data into a validation set. I used this training data for training the model. The validation set helped determine if the model was over or under fitting. 
@@ -127,12 +135,13 @@ I finally randomly shuffled the data set and put 20% of the data into a validati
 
 Here is a visualization of the training and validation loss for each epoch in the final round of training:
 
-![alt text][image4]
+<p align="center">
+  <img src="./images/loss.png">
+</p>
 
 After several rounds of trainings and parameter tuning, the vehicle is able to drive autonomously around the track without leaving the road.
+
 
 <p align="center">
   <img src="https://github.com/zhoujh30/CarND-Behavioral-Cloning-P3/blob/master/images/video.gif?raw=true">
 </p>
-
-![video](https://github.com/zhoujh30/CarND-Behavioral-Cloning-P3/blob/master/images/video.gif?raw=true)
