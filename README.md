@@ -17,6 +17,7 @@ The goals / steps of this project are the following:
 [image2]: ./images/img_flip.png "Image Flipped"
 [image3]: ./images/img_crop.png "Image Cropped"
 [image4]: ./images/loss.png "Loss"
+[image4]: ./images/center_image.png "Center Image"
 
 ---
 ### Files Submitted & Code Quality
@@ -29,7 +30,9 @@ My project includes the following files:
 * [model.h5](https://github.com/zhoujh30/CarND-Behavioral-Cloning-P3/blob/master/model.h5) containing a trained convolution neural network
 * [readme.md](https://github.com/zhoujh30/CarND-Behavioral-Cloning-P3/blob/master/README.md) summarizing the results
 * [video.mp4](https://github.com/zhoujh30/CarND-Behavioral-Cloning-P3/blob/master/video.mp4) recording of the vehicle driving autonomously around the track using trained network
-[![video](https://github.com/zhoujh30/CarND-Behavioral-Cloning-P3/blob/master/images/video.gif?raw=true)]()
+
+![video](https://github.com/zhoujh30/CarND-Behavioral-Cloning-P3/blob/master/images/video.gif?raw=true)
+
 
 #### 2. Submission includes functional code
 Using the Udacity provided simulator and my drive.py file, the car can be driven autonomously around the track by executing 
@@ -39,7 +42,7 @@ python drive.py model.h5
 
 #### 3. Submission code is usable and readable
 
-The model.py file contains the code for training and saving the convolution neural network. The file shows the pipeline I used for training and validating the model, and it contains comments to explain how the code works.
+The [model.py](https://github.com/zhoujh30/CarND-Behavioral-Cloning-P3/blob/master/model.py) file contains the code for training and saving the convolution neural network. The file shows the pipeline I used for training and validating the model, and it contains comments to explain how the code works.
 
 ### Model Architecture and Training Strategy
 
@@ -87,34 +90,32 @@ At the end of the process, the vehicle is able to drive autonomously around the 
 
 The final model architecture (model.py lines 18-24) consisted of a convolution neural network with the following layers and layer sizes ...
 
-Here is a visualization of the architecture (note: visualizing the architecture is optional according to the project rubric)
+Here is a visualization of the architecture.
 
-![alt text][image1]
 
 #### 3. Creation of the Training Set & Training Process
 
-To capture good driving behavior, I first recorded two laps on track one using center lane driving. Here is an example image of center lane driving:
+To capture good driving behavior, I recorded ten laps on track one using center lane driving. Here is an example image of center lane driving:
+
+![alt text][image5]
+
+To augment the data set, I used the images from left and right cameras by adding 0.2 correction on the steering angles:
+
+![alt text][image1]
+
+I also flipped images and angles:
 
 ![alt text][image2]
 
-I then recorded the vehicle recovering from the left side and right sides of the road back to center so that the vehicle would learn to .... These images show what a recovery looks like starting from ... :
+After the collection process, I had 7,980 data points. I then preprocessed this data by cropping the images to only keep the portions that contain useful information.
 
 ![alt text][image3]
+
+
+I finally randomly shuffled the data set and put 20% of the data into a validation set. 
+
+I used this training data for training the model. The validation set helped determine if the model was over or under fitting. 
+
 ![alt text][image4]
-![alt text][image5]
 
-Then I repeated this process on track two in order to get more data points.
-
-To augment the data sat, I also flipped images and angles thinking that this would ... For example, here is an image that has then been flipped:
-
-![alt text][image6]
-![alt text][image7]
-
-Etc ....
-
-After the collection process, I had X number of data points. I then preprocessed this data by ...
-
-
-I finally randomly shuffled the data set and put Y% of the data into a validation set. 
-
-I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was Z as evidenced by ... I used an adam optimizer so that manually training the learning rate wasn't necessary.
+I used an adam optimizer so that manually training the learning rate wasn't necessary.
