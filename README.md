@@ -52,9 +52,10 @@ I used [Nvidia CNN architecture](https://devblogs.nvidia.com/parallelforall/deep
 
 Here is a graph of the architecture:
 
-____________________________________________________________________________________________________
+```
 Layer (type)                     Output Shape          Param #     Connected to                     
-======================================================
+====================================================================================================
+
 lambda_1 (Lambda)                (None, 160, 320, 3)   0           lambda_input_1[0][0]             
 ____________________________________________________________________________________________________
 cropping2d_1 (Cropping2D)        (None, 65, 320, 3)    0           lambda_1[0][0]                   
@@ -86,7 +87,7 @@ dense_5 (Dense)                  (None, 1)             11          dense_4[0][0]
 Total params: 2,712,951
 Trainable params: 2,712,951
 Non-trainable params: 0
-
+```
 
 #### 2. Attempts to reduce overfitting in the model
 
