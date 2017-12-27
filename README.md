@@ -17,7 +17,7 @@ The goals / steps of this project are the following:
 [image2]: ./images/img_flip.png "Image Flipped"
 [image3]: ./images/img_crop.png "Image Cropped"
 [image4]: ./images/loss.png "Loss"
-[image4]: ./images/center_image.png "Center Image"
+[image5]: ./images/center_img.png "Center Image"
 
 ---
 ### Files Submitted & Code Quality
@@ -31,8 +31,6 @@ My project includes the following files:
 * [readme.md](https://github.com/zhoujh30/CarND-Behavioral-Cloning-P3/blob/master/README.md) summarizing the results
 * [video.mp4](https://github.com/zhoujh30/CarND-Behavioral-Cloning-P3/blob/master/video.mp4) recording of the vehicle driving autonomously around the track using trained network
 
-![video](https://github.com/zhoujh30/CarND-Behavioral-Cloning-P3/blob/master/images/video.gif?raw=true)
-
 
 #### 2. Submission includes functional code
 Using the Udacity provided simulator and my drive.py file, the car can be driven autonomously around the track by executing 
@@ -44,58 +42,65 @@ python drive.py model.h5
 
 The [model.py](https://github.com/zhoujh30/CarND-Behavioral-Cloning-P3/blob/master/model.py) file contains the code for training and saving the convolution neural network. The file shows the pipeline I used for training and validating the model, and it contains comments to explain how the code works.
 
+
 ### Model Architecture and Training Strategy
+
 
 #### 1. An appropriate model architecture has been employed
 
-My model consists of a convolution neural network with 3x3 filter sizes and depths between 32 and 128 (model.py lines 18-24) 
+I used [Nvidia CNN architecture](https://devblogs.nvidia.com/parallelforall/deep-learning-self-driving-cars/) used to train self-driving cars ([model.py line 103-119](https://github.com/zhoujh30/CarND-Behavioral-Cloning-P3/blob/master/model.py#L103-L119)). 
 
-The model includes RELU layers to introduce nonlinearity (code line 20), and the data is normalized in the model using a Keras lambda layer (code line 18). 
+Here is a graph of the architecture:
+
+____________________________________________________________________________________________________
+Layer (type)                     Output Shape          Param #     Connected to                     
+======================================================
+lambda_1 (Lambda)                (None, 160, 320, 3)   0           lambda_input_1[0][0]             
+____________________________________________________________________________________________________
+cropping2d_1 (Cropping2D)        (None, 65, 320, 3)    0           lambda_1[0][0]                   
+____________________________________________________________________________________________________
+convolution2d_1 (Convolution2D)  (None, 31, 158, 24)   1824        cropping2d_1[0][0]               
+____________________________________________________________________________________________________
+convolution2d_2 (Convolution2D)  (None, 14, 77, 36)    21636       convolution2d_1[0][0]            
+____________________________________________________________________________________________________
+convolution2d_3 (Convolution2D)  (None, 5, 37, 48)     43248       convolution2d_2[0][0]            
+____________________________________________________________________________________________________
+convolution2d_4 (Convolution2D)  (None, 3, 35, 64)     27712       convolution2d_3[0][0]            
+____________________________________________________________________________________________________
+convolution2d_5 (Convolution2D)  (None, 1, 33, 64)     36928       convolution2d_4[0][0]            
+____________________________________________________________________________________________________
+dropout_1 (Dropout)              (None, 1, 33, 64)     0           convolution2d_5[0][0]            
+____________________________________________________________________________________________________
+flatten_1 (Flatten)              (None, 2112)          0           dropout_1[0][0]                  
+____________________________________________________________________________________________________
+dense_1 (Dense)                  (None, 1164)          2459532     flatten_1[0][0]                  
+____________________________________________________________________________________________________
+dense_2 (Dense)                  (None, 100)           116500      dense_1[0][0]                    
+____________________________________________________________________________________________________
+dense_3 (Dense)                  (None, 50)            5050        dense_2[0][0]                    
+____________________________________________________________________________________________________
+dense_4 (Dense)                  (None, 10)            510         dense_3[0][0]                    
+____________________________________________________________________________________________________
+dense_5 (Dense)                  (None, 1)             11          dense_4[0][0]                    
+======================================================
+Total params: 2,712,951
+Trainable params: 2,712,951
+Non-trainable params: 0
+
 
 #### 2. Attempts to reduce overfitting in the model
 
-The model contains dropout layers in order to reduce overfitting (model.py lines 21). 
+The model contains dropout layers in order to reduce overfitting ([model.py line 112](https://github.com/zhoujh30/CarND-Behavioral-Cloning-P3/blob/master/model.py#L112)). 
 
-The model was trained and validated on different data sets to ensure that the model was not overfitting (code line 10-16). The model was tested by running it through the simulator and ensuring that the vehicle could stay on the track.
+By splitting the data sets into 80% for training and 20% for validation, the model was trained and validated on different data sets to ensure that the model was not overfitting ([model.py line 98-99](https://github.com/zhoujh30/CarND-Behavioral-Cloning-P3/blob/master/model.py#L98-L99)). The model was tested by running it through the simulator and ensuring that the vehicle could stay on the track.
 
 #### 3. Model parameter tuning
 
-The model used an adam optimizer, so the learning rate was not tuned manually (model.py line 25).
+The model used an adam optimizer, so the learning rate was not tuned manually ([model.py line 124](https://github.com/zhoujh30/CarND-Behavioral-Cloning-P3/blob/master/model.py#L124)).
 
 #### 4. Appropriate training data
 
-Training data was chosen to keep the vehicle driving on the road. I used a combination of center lane driving, recovering from the left and right sides of the road ... 
-
-For details about how I created the training data, see the next section. 
-
-### Model Architecture and Training Strategy
-
-#### 1. Solution Design Approach
-
-The overall strategy for deriving a model architecture was to ...
-
-My first step was to use a convolution neural network model similar to the ... I thought this model might be appropriate because ...
-
-In order to gauge how well the model was working, I split my image and steering angle data into a training and validation set. I found that my first model had a low mean squared error on the training set but a high mean squared error on the validation set. This implied that the model was overfitting. 
-
-To combat the overfitting, I modified the model so that ...
-
-Then I ... 
-
-The final step was to run the simulator to see how well the car was driving around track one. There were a few spots where the vehicle fell off the track... to improve the driving behavior in these cases, I ....
-
-At the end of the process, the vehicle is able to drive autonomously around the track without leaving the road.
-
-#### 2. Final Model Architecture
-
-The final model architecture (model.py lines 18-24) consisted of a convolution neural network with the following layers and layer sizes ...
-
-Here is a visualization of the architecture.
-
-
-#### 3. Creation of the Training Set & Training Process
-
-To capture good driving behavior, I recorded ten laps on track one using center lane driving. Here is an example image of center lane driving:
+Training data was chosen to keep the vehicle driving on the road. To capture good driving behavior, I recorded ten laps on track one using center lane driving. Here is an example image of center lane driving:
 
 ![alt text][image5]
 
@@ -112,10 +117,16 @@ After the collection process, I had 7,980 data points. I then preprocessed this 
 ![alt text][image3]
 
 
-I finally randomly shuffled the data set and put 20% of the data into a validation set. 
+I finally randomly shuffled the data set and put 20% of the data into a validation set. I used this training data for training the model. The validation set helped determine if the model was over or under fitting. 
 
-I used this training data for training the model. The validation set helped determine if the model was over or under fitting. 
+
+### Results
+
+
+Here is a visualization of the training and validation loss for each epoch in the final round of training:
 
 ![alt text][image4]
 
-I used an adam optimizer so that manually training the learning rate wasn't necessary.
+After several rounds of trainings and parameter tuning, the vehicle is able to drive autonomously around the track without leaving the road.
+
+![video](https://github.com/zhoujh30/CarND-Behavioral-Cloning-P3/blob/master/images/video.gif?raw=true)
